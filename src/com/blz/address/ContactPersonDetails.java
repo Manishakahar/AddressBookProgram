@@ -75,4 +75,17 @@ public class ContactPersonDetails {
         addressBookMain.phoneNo = sc.nextLong();
         return addressBookMain;
     }
+        //   Delete the Contact Details
+    public void deleteRecord(String name, ArrayList<ContactPersonDetails> contactDetails) {
+        if(contactDetails.size()>0) {
+            for (int i = 0; i < contactDetails.size(); i++) {
+                if (name.equals(contactDetails.get(i).firstName)) {
+                    contactDetails.remove(i);
+                }
+                else System.out.println("There is no any person contact for "+name);
+            }
+        }
+        else System.out.println("There is no any person address to delete");
+        System.out.println("Record Delete Successfully.......");
+    }
 }
