@@ -1,6 +1,8 @@
 package com.blz.address;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Map;
 import java.util.Scanner;
 
 // Declaring Variable
@@ -87,5 +89,35 @@ public class ContactPersonDetails {
         }
         else System.out.println("There is no any person address to delete");
         System.out.println("Record Delete Successfully.......");
+    }
+
+    public Dictionary<String, ContactPersonDetails> getInput(Dictionary<String, ContactPersonDetails> dictionary) {
+        ContactPersonDetails contactPerson=new ContactPersonDetails();
+        System.out.println("Enter Name for dictionary");
+        String s=(new Scanner(System.in)).next();
+        dictionary.put(s,contactPerson.getInput());
+        return dictionary;
+    }
+
+
+    public void getaddressbook(Map<String, ContactPersonDetails> addressBookHashMap) {
+        for(String addressbook:addressBookHashMap.keySet()){
+            System.out.println("Person contact for the "+addressbook.toString()+" is "+addressBookHashMap.get(addressbook).toString());
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "ContactPersonDetails{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", address='" + address + '\'' +
+                ", emailId='" + emailId + '\'' +
+                ", phoneNo=" + phoneNo +
+                ", zipCode=" + zipCode +
+                ", count=" + count +
+                '}';
     }
 }
