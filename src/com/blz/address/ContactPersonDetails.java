@@ -100,7 +100,7 @@ public class ContactPersonDetails {
     }
 
 
-    public void getaddressbook(Map<String, ContactPersonDetails> addressBookHashMap) {
+    public void getAddressbook(Map<String, ContactPersonDetails> addressBookHashMap) {
         for(String addressbook:addressBookHashMap.keySet()){
             System.out.println("Person contact for the "+addressbook.toString()+" is "+addressBookHashMap.get(addressbook).toString());
         }

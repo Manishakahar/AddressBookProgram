@@ -1,6 +1,8 @@
 package com.blz.address;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class AddressBookMain {
@@ -8,12 +10,15 @@ public class AddressBookMain {
     public static void main(String[] args) {
         System.out.println("Welcome to Address Book Program");
         ContactPersonDetails contactPersonDetails = new ContactPersonDetails();
+        Map<String, ContactPersonDetails> addressBookHashMap = new HashMap<>();
         ArrayList<ContactPersonDetails> contactDetails = new ArrayList<>();
         String name;
         Scanner sc = new Scanner(System.in);
         boolean flag = true;
+        int index = 0;
         int userChoice = 1;
         // User Choose the Option
+
         while (flag) {
             System.out.print(" 1 - Add more contact \n2 - Edit Contact \n3 - Delete Person Contact \n4 - Show AddressBook " + "\n0 - for exist \n Enter your choice");
             userChoice = sc.nextInt();
@@ -21,6 +26,7 @@ public class AddressBookMain {
             switch (userChoice) {
                 case 1:
                     contactDetails.add(contactPersonDetails.getInput());
+                    addressBookHashMap.put(contactDetails.get(index).firstName, contactDetails.get(index++));
                     break;
                 case 2:
                     System.out.println("Enter first name that you want to edit contactDetails");
@@ -41,5 +47,6 @@ public class AddressBookMain {
                     break;
             }
         }
+        contactPersonDetails.getAddressbook(addressBookHashMap);
     }
 }
