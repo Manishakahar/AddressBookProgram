@@ -7,16 +7,16 @@ import java.util.Scanner;
 
 public class AddressBookMain {
 
-    public static void main(String[] args) {
-        System.out.println("Welcome to Address Book Program");
+    public static ArrayList<ContactPersonDetails> contactBookOptions() {
+
         ContactPersonDetails contactPersonDetails = new ContactPersonDetails();
         Map<String, ContactPersonDetails> addressBookHashMap = new HashMap<>();
         ArrayList<ContactPersonDetails> contactDetails = new ArrayList<>();
         String name;
         Scanner sc = new Scanner(System.in);
         boolean flag = true;
-        int index = 0;
         int userChoice = 1;
+
         // User Choose the Option
 
         while (flag) {
@@ -26,7 +26,6 @@ public class AddressBookMain {
             switch (userChoice) {
                 case 1:
                     contactDetails.add(contactPersonDetails.getInput());
-                    addressBookHashMap.put(contactDetails.get(index).firstName, contactDetails.get(index++));
                     break;
                 case 2:
                     System.out.println("Enter first name that you want to edit contactDetails");
@@ -36,7 +35,7 @@ public class AddressBookMain {
                 case 3:
                     System.out.println("Enter the first name that you want to delete Contact details ");
                     name = sc.next();
-                    contactPersonDetails.deleteRecord(name,contactDetails);
+                    contactPersonDetails.deleteRecord(name, contactDetails);
                     break;
                 case 4:
                     System.out.println("contactDetails : " + contactDetails.size());
@@ -47,6 +46,7 @@ public class AddressBookMain {
                     break;
             }
         }
-        contactPersonDetails.getAddressbook(addressBookHashMap);
+        return contactDetails;
     }
 }
+
