@@ -48,7 +48,7 @@ public class AddressBook {
                     }
                     break;
                 case 4:
-                    System.out.println("Address Bool List");
+                    System.out.println("Address Book List");
 
                     for(String name:addressHashMap.keySet()){
                         String value=addressHashMap.get(name).toString();

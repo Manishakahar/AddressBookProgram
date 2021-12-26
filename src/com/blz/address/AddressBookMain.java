@@ -7,15 +7,17 @@ import java.util.Scanner;
 
 public class AddressBookMain {
 
+    public static ContactPersonDetails contactPersonDetails = new ContactPersonDetails();
+   public static Map<String, ContactPersonDetails> addressBookHashMap = new HashMap<>();
+   public static ArrayList<ContactPersonDetails> contactDetails = new ArrayList<>();
+    public  static String name;
+   public static Scanner sc = new Scanner(System.in);
+    public static boolean flag = true;
+   public static int userChoice = 1;
+
     public static ArrayList<ContactPersonDetails> contactBookOptions() {
 
-        ContactPersonDetails contactPersonDetails = new ContactPersonDetails();
-        Map<String, ContactPersonDetails> addressBookHashMap = new HashMap<>();
-        ArrayList<ContactPersonDetails> contactDetails = new ArrayList<>();
-        String name;
-        Scanner sc = new Scanner(System.in);
-        boolean flag = true;
-        int userChoice = 1;
+
 
         // User Choose the Option
 
@@ -25,7 +27,7 @@ public class AddressBookMain {
 
             switch (userChoice) {
                 case 1:
-                    contactDetails.add(contactPersonDetails.getInput());
+                    contactDetails.add(contactPersonDetails.getInput(contactDetails));
                     break;
                 case 2:
                     System.out.println("Enter first name that you want to edit contactDetails");

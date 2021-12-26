@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 // Declaring Variable
-public class ContactPersonDetails {
+public class ContactPersonDetails<Person> {
     String firstName;
     String lastName;
     String city;
@@ -23,11 +23,11 @@ public class ContactPersonDetails {
     public void addressBook(ArrayList<ContactPersonDetails> contactPerson) {
         for (int i = 0; i < contactPerson.size(); i++) {
             System.out.println("contact" + count);
-            System.out.println("First Name: " +contactPerson.get(i).firstName);
-            System.out.println("Last Name: " +contactPerson.get(i). lastName);
-            System.out.println("Address: " +contactPerson.get(i). address);
+            System.out.println("First Name: " + contactPerson.get(i).firstName);
+            System.out.println("Last Name: " + contactPerson.get(i).lastName);
+            System.out.println("Address: " + contactPerson.get(i).address);
             System.out.println("City Name : " + contactPerson.get(i).city);
-            System.out.println("State Name : " +contactPerson.get(i). state);
+            System.out.println("State Name : " + contactPerson.get(i).state);
             System.out.println("Email-Id : " + contactPerson.get(i).emailId);
             System.out.println("Zip Code : " + contactPerson.get(i).zipCode);
             System.out.println("phone Number Name : " + contactPerson.get(i).phoneNo);
@@ -40,7 +40,7 @@ public class ContactPersonDetails {
         for (int i = 0; i < contactDetails.size(); i++) {
             if (name.equals(contactDetails.get(i).firstName)) {
                 contactDetails.remove(i);
-                contactDetails.add(i, getInput());
+                contactDetails.add(i, getInput(contactDetails));
             }
         }
         System.out.println("Record Update Successfully");
@@ -48,7 +48,7 @@ public class ContactPersonDetails {
 
     // Creating function to get user Input
 
-    public ContactPersonDetails getInput() {
+    public ContactPersonDetails getInput(ArrayList<ContactPersonDetails> contactDetails) {
         ContactPersonDetails contactPersonDetails = new ContactPersonDetails();
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter the First Name : ");
@@ -56,6 +56,9 @@ public class ContactPersonDetails {
 
         System.out.print("Enter the Last Name : ");
         contactPersonDetails.lastName = sc.next();
+        if(count>1){
+            checkDuplicateRecords(contactPersonDetails.firstName,contactPersonDetails.lastName,contactDetails);
+        }
 
         System.out.print("Enter the Address: ");
         contactPersonDetails.address = sc.next();
@@ -74,40 +77,58 @@ public class ContactPersonDetails {
 
         System.out.print("Enter the  Phone Number: ");
         contactPersonDetails.phoneNo = sc.nextLong();
+        count++;
         return contactPersonDetails;
     }
-        //   Delete the Contact Details
+
+    //   Delete the Contact Details
     public void deleteRecord(String name, ArrayList<ContactPersonDetails> contactDetails) {
-        if(contactDetails.size()>0) {
+        if (contactDetails.size() > 0) {
             for (int i = 0; i < contactDetails.size(); i++) {
                 if (name.equals(contactDetails.get(i).firstName)) {
                     contactDetails.remove(i);
-                }
-                else System.out.println("There is no any person contact for "+name);
+                } else System.out.println("There is no any person contact for " + name);
             }
-        }
-        else System.out.println("There is no any person address to delete");
+        } else System.out.println("There is no any person address to delete");
         System.out.println("Record Delete Successfully");
     }
 
     public void getAddressbook(Map<String, ContactPersonDetails> addressBookHashMap) {
-        for(String addressbook:addressBookHashMap.keySet()){
-            System.out.println("Person contact for the "+addressbook+" is "+addressBookHashMap.get(addressbook).toString());
+        for (String addressbook : addressBookHashMap.keySet()) {
+            System.out.println("Person contact for the " + addressbook + " is " + addressBookHashMap.get(addressbook).toString());
         }
     }
 
-    @Override
-    public String toString() {
-        return "ContactPersonDetails{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", address='" + address + '\'' +
-                ", emailId='" + emailId + '\'' +
-                ", phoneNo=" + phoneNo +
-                ", zipCode=" + zipCode +
-                ", count=" + count +
-                '}';
+    public void checkDuplicateRecords(String name, String lastName, ArrayList<ContactPersonDetails> contactDetails){
+            for (int i = 0; i < contactDetails.size(); i++) {
+                String existingRecordName = contactDetails.get(i).firstName+" "+ contactDetails.get(i).lastName;
+                String newRecordName=name+" "+lastName;
+                if(newRecordName.equals(existingRecordName)){
+                    System.out.println("Record with same Name already exists");
+                    AddressBookMain.contactBookOptions();
+                    break;
+                }else{
+                    continue;
+                }
+            }
     }
+
+
+        @Override
+        public String toString () {
+            return "ContactPersonDetails{" +
+                    "firstName='" + firstName + '\'' +
+                    ", lastName='" + lastName + '\'' +
+                    ", city='" + city + '\'' +
+                    ", state='" + state + '\'' +
+                    ", address='" + address + '\'' +
+                    ", emailId='" + emailId + '\'' +
+                    ", phoneNo=" + phoneNo +
+                    ", zipCode=" + zipCode +
+                    ", count=" + count +
+                    '}';
+        }
+
 }
+
+
