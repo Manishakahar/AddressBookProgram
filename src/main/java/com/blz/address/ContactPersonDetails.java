@@ -56,8 +56,8 @@ public class ContactPersonDetails<Person> {
 
         System.out.print("Enter the Last Name : ");
         contactPersonDetails.lastName = sc.next();
-        if(count>1){
-            checkDuplicateRecords(contactPersonDetails.firstName,contactPersonDetails.lastName,contactDetails);
+        if (count > 1) {
+            checkDuplicateRecords(contactPersonDetails.firstName, contactPersonDetails.lastName, contactDetails);
         }
 
         System.out.print("Enter the Address: ");
@@ -99,35 +99,49 @@ public class ContactPersonDetails<Person> {
         }
     }
 
-    public void checkDuplicateRecords(String name, String lastName, ArrayList<ContactPersonDetails> contactDetails){
-            for (int i = 0; i < contactDetails.size(); i++) {
-                String existingRecordName = contactDetails.get(i).firstName+" "+ contactDetails.get(i).lastName;
-                String newRecordName=name+" "+lastName;
-                if(newRecordName.equals(existingRecordName)){
-                    System.out.println("Record with same Name already exists");
-                    AddressBookMain.contactBookOptions();
-                    break;
-                }else{
-                    continue;
-                }
+    //  Duplicate Records of the Contact Details
+    public void checkDuplicateRecords(String name, String lastName, ArrayList<ContactPersonDetails> contactDetails) {
+        for (int i = 0; i < contactDetails.size(); i++) {
+            String existingRecordName = contactDetails.get(i).firstName + " " + contactDetails.get(i).lastName;
+            String newRecordName = name + " " + lastName;
+            if (newRecordName.equals(existingRecordName)) {
+                System.out.println("Record with same Name already exists");
+                AddressBookMain.contactBookOptions();
+                break;
+            } else {
+                continue;
             }
+        }
     }
 
+    // Search contact Person using city name
+    public static void search(String city, Map<String, ArrayList<AddressBookMain>> addressHashMap) {
+        addressHashMap.values()
+                .stream().
+                forEach(value -> {
+                    value.stream()
+                            .forEach(person -> {
+                                if (person.city.contains(city) || person.state.contains(city))
+                                    System.out.println(person);
+                            });
+                });
+    }
 
-        @Override
-        public String toString () {
-            return "ContactPersonDetails{" +
-                    "firstName='" + firstName + '\'' +
-                    ", lastName='" + lastName + '\'' +
-                    ", city='" + city + '\'' +
-                    ", state='" + state + '\'' +
-                    ", address='" + address + '\'' +
-                    ", emailId='" + emailId + '\'' +
-                    ", phoneNo=" + phoneNo +
-                    ", zipCode=" + zipCode +
-                    ", count=" + count +
-                    '}';
-        }
+    @Override
+    public String toString() {
+        return "ContactPersonDetails{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", address='" + address + '\'' +
+                ", emailId='" + emailId + '\'' +
+                ", phoneNo=" + phoneNo +
+                ", zipCode=" + zipCode +
+                ", count=" + count +
+                '}';
+    }
+
 
 }
 
