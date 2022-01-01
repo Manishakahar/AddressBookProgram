@@ -1,8 +1,10 @@
 package com.blz.address;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
 
 // Declaring Variable
 public class ContactPersonDetails<Person> {
@@ -127,6 +129,21 @@ public class ContactPersonDetails<Person> {
                 });
     }
 
+    // Show the Persons by City or State
+    static Map<String, ContactPersonDetails> cityStateRelatedData(String cityStateName, Map<String, ArrayList<ContactPersonDetails>> addressHashMap) {
+        Map<String, ContactPersonDetails> CityName = new HashMap<>();
+        AtomicInteger cityCounter = new AtomicInteger(1);
+        addressHashMap
+                .values()
+                .forEach(value -> {
+                    value.forEach(person -> {
+                        if (person.city.equals(cityStateName) || person.state.equals(cityStateName))
+                            CityName.put((cityCounter.getAndIncrement() + ""), person);
+                    });
+                });
+        return CityName;
+    }
+
     @Override
     public String toString() {
         return "ContactPersonDetails{" +
@@ -141,8 +158,6 @@ public class ContactPersonDetails<Person> {
                 ", count=" + count +
                 '}';
     }
-
-
 }
 
 

@@ -2,20 +2,23 @@ package com.blz.address;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class AddressBook {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         System.out.println("Welcome to Address Book");
         Map<String, ArrayList<AddressBookMain>> addressHashMap = new HashMap();
+        Map<String, ArrayList<ContactPersonDetails>> personDetailsMap = new HashMap<>();
         ArrayList record = new ArrayList();
         Scanner sc = new Scanner(System.in);
         String bookName;
         boolean flag = true;
 
+
         while (flag) {
             System.out.println("--------------------------------------------");
             System.out.println("1 - Add more Address Book  \n2 - Edit Address Book \n3 - Delete Address Book \n4 - Show AddressBook " + "\n5 - Search Using City or State" +
-                    "\n0 -  for exit \nEnter your Choice.....");
+                    "\n6- Show City related data" + "\n0 -  for exit \nEnter your Choice.....");
             int choice = sc.nextInt();
             switch (choice) {
                 case 1:
@@ -54,6 +57,13 @@ public class AddressBook {
                 case 5:
                     System.out.print("Enter City name : ");
                     ContactPersonDetails.search((new Scanner(System.in).next()), addressHashMap);
+                    break;
+                case 6:
+                    System.out.print("Enter City or State name : ");
+                    Map<String, ContactPersonDetails> cityStateMap = ContactPersonDetails.cityStateRelatedData((new Scanner(System.in).next()), personDetailsMap);
+                    for (String cityCount : cityStateMap.keySet()) {
+                        System.out.println(cityCount + " - " + cityStateMap.get(cityCount));
+                    }
                     break;
                 case 0:
                     flag = false;
