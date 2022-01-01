@@ -10,9 +10,9 @@ public class AddressBookMain {
     public static ContactPersonDetails contactPersonDetails = new ContactPersonDetails();
     public static Map<String, ContactPersonDetails> addressBookHashMap = new HashMap<>();
     public static ArrayList<ContactPersonDetails> contactDetails = new ArrayList<>();
-    public static String name;
     public static Scanner sc = new Scanner(System.in);
     public static boolean flag = true;
+    public static String name;
     public static int userChoice = 1;
     public String city;
     public String state;

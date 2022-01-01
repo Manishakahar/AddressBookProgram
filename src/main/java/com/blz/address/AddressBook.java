@@ -1,11 +1,30 @@
 package com.blz.address;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.IntStream;
 
 public class AddressBook {
-    public static void main(String[] args) {
+    private static ContactPersonDetails<Object> arrayList;
+
+    public static void main(String[] args) throws IOException {
+        String path = "C:\\Users\\Dell\\Desktop\\manisha\\AddressBook\\src\\main\\resources\\AddressBook";
+        IntStream.range(1, 6).forEach(value -> {
+            Path fileName = Paths.get(path + "/Book" + value + ".text");
+            try {
+                if (Files.notExists(fileName))
+                    Files.createFile(fileName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        readFile(path);
+        writeFile(path);
         System.out.println("Welcome to Address Book");
         Map<String, ArrayList<AddressBookMain>> addressHashMap = new HashMap();
         Map<String, ArrayList<ContactPersonDetails>> personDetailsMap = new HashMap<>();
@@ -13,7 +32,6 @@ public class AddressBook {
         Scanner sc = new Scanner(System.in);
         String bookName;
         boolean flag = true;
-
 
         while (flag) {
             System.out.println("--------------------------------------------");
@@ -71,6 +89,27 @@ public class AddressBook {
                 default:
                     System.out.println("Please enter valid input");
             }
+        }
+    }
+
+    private static void readFile(String path) {
+        Path filepath = Paths.get(path + "/Book1.text");
+        try {
+            byte[] byteArray = Files.readAllBytes(filepath);
+            System.out.println(new String(byteArray));
+            List<String> list = Files.readAllLines(filepath);
+            System.out.println(list);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private static void writeFile(String path){
+        Path filepath = Paths.get(path + "/Book2.text");
+        String addData = "This My Address book project";
+        try {
+           Files.write(filepath,addData.getBytes(), StandardOpenOption.CREATE,StandardOpenOption.APPEND);
+        }catch (IOException e){
+            e.printStackTrace();
         }
     }
 }
