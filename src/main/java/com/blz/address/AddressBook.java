@@ -23,8 +23,7 @@ public class AddressBook {
                 e.printStackTrace();
             }
         });
-        readFile(path);
-        writeFile(path);
+
         System.out.println("Welcome to Address Book");
         Map<String, ArrayList<AddressBookMain>> addressHashMap = new HashMap();
         Map<String, ArrayList<ContactPersonDetails>> personDetailsMap = new HashMap<>();
@@ -66,10 +65,17 @@ public class AddressBook {
                     break;
                 case 4:
                     System.out.println("Address Book List");
+                    readFile(path);
+                    writeFile(path);
+                    if (addressHashMap != null) {
 
-                    for (String name : addressHashMap.keySet()) {
-                        String value = addressHashMap.get(name).toString();
-                        System.out.println(name + " --> " + value);
+                        for (String name : addressHashMap.keySet()) {
+                            String value = addressHashMap.get(name).toString();
+                            System.out.println(name + " --> " + value);
+
+                        }
+                    }else {
+                        System.out.println("No Entries in Address book");
                     }
                     break;
                 case 5:
