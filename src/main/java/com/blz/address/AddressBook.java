@@ -1,5 +1,6 @@
 package com.blz.address;
 
+import com.google.gson.Gson;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
@@ -8,6 +9,7 @@ import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import com.opencsv.exceptions.CsvValidationException;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
@@ -19,7 +21,7 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 public class AddressBook {
-    private static ContactPersonDetails<Object> arrayList;
+
     private static final String PATH ="C:\\Users\\Dell\\Desktop\\manisha\\AddressBook\\src\\main\\resources\\AddressBook";
     public static void main(String[] args) throws IOException, CsvValidationException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
         // File io
@@ -69,7 +71,10 @@ public class AddressBook {
                         record.add(temp);
 
                     }
+                    // write the user data in csv file
                     writeCsvFileInAddressBook(bookName, record);
+                    //write the user data in json file
+                    writeJsonFileInAddressBook(bookName,record);
                     addressHashMap.put(bookName, record);
                     break;
                     //For Delete Address Book
@@ -138,7 +143,8 @@ public class AddressBook {
             }
         }
     }
-     // readFile
+
+    // readFile
     private static void readFile(String path) {
         Path filepath = Paths.get(path + "/Book1.text");
         try {
@@ -172,6 +178,17 @@ public class AddressBook {
             beanToCSV.write((ContactPersonDetails) cp);
         }
         writer.close();
-
+    }
+   //    write Json Files using Address Book
+    private static void writeJsonFileInAddressBook (String addressBookName, ArrayList arrayList) throws IOException {
+        String jsonFile=(PATH + "/" + addressBookName + ".json");
+        Gson gson= new Gson();
+        String json=gson.toJson(arrayList);
+        if (Files.notExists(Paths.get(jsonFile))) {
+            Files.createFile(Paths.get(jsonFile));
+            FileWriter writer=new FileWriter(jsonFile);
+            writer.write(json);
+            writer.close();
+        }
     }
 }
