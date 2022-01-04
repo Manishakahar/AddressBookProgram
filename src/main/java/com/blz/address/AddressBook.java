@@ -18,6 +18,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 public class AddressBook {
@@ -51,7 +52,7 @@ public class AddressBook {
         while (flag) {
             System.out.println("----------------BOOKS----------------------------");
             System.out.println("1 - Add more Address Book  \n2 - Edit Address Book \n3 - Delete Address Book \n4 - Show AddressBook " + "\n5 - Search Using City or State" +
-                    "\n6- Show City related data" + "\n0 -  for exit \nEnter your Choice.....");
+                    "\n6- Show City related data" + "\n7 - Enter city or state name " +"\n0 -  for exit \nEnter your Choice.....");
             // User select the Choice
             int choice = sc.nextInt();
             switch (choice) {
@@ -134,6 +135,10 @@ public class AddressBook {
                         System.out.println(cityCount + " - " + cityStateMap.get(cityCount));
                     }
                     break;
+                case 7:
+                    System.out.print("Enter City or State name : ");
+                    int numberOfContact= countOfContactPersonData((new Scanner(System.in).next()),addressHashMap);
+                    System.out.println("Total number of contact in given City is : "+numberOfContact);
                     // For exit
                 case 0:
                     flag = false;
@@ -142,6 +147,19 @@ public class AddressBook {
                     System.out.println("Please enter valid input");
             }
         }
+    }
+
+    private static int countOfContactPersonData(String cityStateName, Map<String, ArrayList<AddressBookMain>> addressHashMap) {
+        AtomicInteger cityCounter = new AtomicInteger();
+        addressHashMap
+                .values()
+                .forEach(value -> {
+                    value.forEach(person -> {
+                        if (person.city.equals(cityStateName) || person.state.equals(cityStateName))
+                            cityCounter.getAndIncrement();
+                    });
+                });
+        return cityCounter.get();
     }
 
     // readFile
