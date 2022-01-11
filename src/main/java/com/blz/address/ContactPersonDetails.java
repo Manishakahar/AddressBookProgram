@@ -1,6 +1,13 @@
 package com.blz.address;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 // Declaring Variable
 public class ContactPersonDetails<Person> {
@@ -113,7 +120,7 @@ public class ContactPersonDetails<Person> {
     }
 
     // Search contact Person using city name
-    public static void search(String city, Map<String, ArrayList<AddressBookMain>> addressHashMap) {
+    public static void search(String city, Map<String, ArrayList<ContactPersonDetails>> addressHashMap) {
         addressHashMap.values()
                 .stream().
                 forEach(value -> {
@@ -139,8 +146,28 @@ public class ContactPersonDetails<Person> {
                 });
         return CityName;
     }
+    static int countOfContactPersonData(String cityStateName, Map<String, ArrayList<ContactPersonDetails>> addressHashMap) {
+        AtomicInteger cityCounter = new AtomicInteger();
+        addressHashMap
+                .values()
+                .forEach(value -> {
+                    value.forEach(person -> {
+                        if (person.city.equals(cityStateName) || person.state.equals(cityStateName))
+                            cityCounter.getAndIncrement();
+                    });
+                });
+        return cityCounter.get();
+    }
 
-    @Override
+    public static void sortContactPersonDetails(List<ContactPersonDetails> contacts) {
+        List<ContactPersonDetails> listObject=
+                contacts.stream().sorted((o1,o2)->o1.firstName.compareTo(o2.firstName)).collect(Collectors.toList());
+        for(ContactPersonDetails cp:listObject){
+            System.out.println(cp);
+        }
+    }
+
+        @Override
     public String toString() {
         return "ContactPersonDetails{" +
                 "firstName='" + firstName + '\'' +

@@ -19,6 +19,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class AddressBook {
@@ -42,8 +43,7 @@ public class AddressBook {
         String[] nextRecord;
         // print Welcome Message
         System.out.println("Welcome to Address Book");
-        Map<String, ArrayList<AddressBookMain>> addressHashMap = new HashMap();
-        Map<String, ArrayList<ContactPersonDetails>> personDetailsMap = new HashMap<>();
+        Map<String, ArrayList<ContactPersonDetails>> addressHashMap = new HashMap<>();
         ArrayList record = new ArrayList();
         Scanner sc = new Scanner(System.in);
         String bookName;
@@ -52,7 +52,8 @@ public class AddressBook {
         while (flag) {
             System.out.println("----------------BOOKS----------------------------");
             System.out.println("1 - Add more Address Book  \n2 - Edit Address Book \n3 - Delete Address Book \n4 - Show AddressBook " + "\n5 - Search Using City or State" +
-                    "\n6- Show City related data" + "\n7 - Enter city or state name " +"\n0 -  for exit \nEnter your Choice.....");
+                    "\n6- Show City related data" + "\n7 - Enter city or state name " + "\n8 - Enter book Name to find sorted contact person details"
+                    +"\n0 -  for exit \nEnter your Choice.....");
             // User select the Choice
             int choice = sc.nextInt();
             switch (choice) {
@@ -130,15 +131,22 @@ public class AddressBook {
                     //For Show City related data
                 case 6:
                     System.out.print("Enter City or State name : ");
-                    Map<String, ContactPersonDetails> cityStateMap = ContactPersonDetails.cityStateRelatedData((new Scanner(System.in).next()), personDetailsMap);
+                    Map<String, ContactPersonDetails> cityStateMap = ContactPersonDetails.cityStateRelatedData((new Scanner(System.in).next()), addressHashMap);
                     for (String cityCount : cityStateMap.keySet()) {
                         System.out.println(cityCount + " - " + cityStateMap.get(cityCount));
                     }
                     break;
                 case 7:
                     System.out.print("Enter City or State name : ");
-                    int numberOfContact= countOfContactPersonData((new Scanner(System.in).next()),addressHashMap);
+                    int numberOfContact= ContactPersonDetails.countOfContactPersonData((new Scanner(System.in).next()),addressHashMap);
                     System.out.println("Total number of contact in given City is : "+numberOfContact);
+                    break;
+                case 8:
+                    System.out.println("Enter the Book Name ; ");
+                    String book=sc.next();
+                    List<ContactPersonDetails> contacts=addressHashMap.get(book);
+                    ContactPersonDetails.sortContactPersonDetails(contacts);
+                    break;
                     // For exit
                 case 0:
                     flag = false;
@@ -148,21 +156,7 @@ public class AddressBook {
             }
         }
     }
-
-    private static int countOfContactPersonData(String cityStateName, Map<String, ArrayList<AddressBookMain>> addressHashMap) {
-        AtomicInteger cityCounter = new AtomicInteger();
-        addressHashMap
-                .values()
-                .forEach(value -> {
-                    value.forEach(person -> {
-                        if (person.city.equals(cityStateName) || person.state.equals(cityStateName))
-                            cityCounter.getAndIncrement();
-                    });
-                });
-        return cityCounter.get();
-    }
-
-    // readFile
+        // readFile
     private static void readFile(String path) {
         Path filepath = Paths.get(path + "/Book1.text");
         try {

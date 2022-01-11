@@ -1,5 +1,6 @@
 package com.blz.address;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +17,6 @@ public class AddressBookMain {
     public static int userChoice = 1;
     public String city;
     public String state;
-
 
     public static ArrayList<ContactPersonDetails> contactBookOptions() {
 
