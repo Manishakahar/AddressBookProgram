@@ -1,1 +1,13 @@
-[{"firstName":"manisha","lastName":"kahar","city":"sxbsx","state":"sxjbsxj","address":"azabz","emailId":"xbsx","phoneNo":93734434333,"zipCode":745434,"count":1}]
+[
+  {
+    "firstName": "manisha",
+    "lastName": "kahar",
+    "city": "sxbsx",
+    "state": "sxjbsxj",
+    "address": "azabz",
+    "emailId": "xbsx",
+    "phoneNo": 93734434333,
+    "zipCode": 745434,
+    "count": 1
+  }
+]

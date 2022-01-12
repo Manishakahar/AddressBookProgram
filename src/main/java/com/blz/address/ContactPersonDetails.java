@@ -1,16 +1,11 @@
 package com.blz.address;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 // Declaring Variable
-public class ContactPersonDetails<Person> {
+public class ContactPersonDetails {
     String firstName;
     String lastName;
     String city;
@@ -20,9 +15,6 @@ public class ContactPersonDetails<Person> {
     long phoneNo;
     int zipCode;
     int count = 1;
-
-    public void ContactPerson() {
-    }
 
     // Display User Details
     public void addressBook(ArrayList<ContactPersonDetails> contactPerson) {
@@ -146,6 +138,7 @@ public class ContactPersonDetails<Person> {
                 });
         return CityName;
     }
+    //Count by City or state person data
     static int countOfContactPersonData(String cityStateName, Map<String, ArrayList<ContactPersonDetails>> addressHashMap) {
         AtomicInteger cityCounter = new AtomicInteger();
         addressHashMap
@@ -158,7 +151,7 @@ public class ContactPersonDetails<Person> {
                 });
         return cityCounter.get();
     }
-
+    // Sort entries in address book alphabetically data
     public static void sortContactPersonDetails(List<ContactPersonDetails> contacts) {
         List<ContactPersonDetails> listObject=
                 contacts.stream().sorted((o1,o2)->o1.firstName.compareTo(o2.firstName)).collect(Collectors.toList());
@@ -166,8 +159,25 @@ public class ContactPersonDetails<Person> {
             System.out.println(cp);
         }
     }
+    // Sort entries in address book by city,state or zipcode
+    public static void sortAddressBookCityStateZip(int nextInt, List<ContactPersonDetails> contact) {
+        List<ContactPersonDetails> listObject = null;
+        int option = 0;
+        if (option == 1) {
+            listObject = contact.stream().sorted((o1,o2) -> o1.city.compareTo(o2.city)).collect(Collectors.toList());
+        }
+        if (option == 2) {
+            listObject = contact.stream().sorted((o1,o2) -> o1.state.compareTo(o2.state)).collect(Collectors.toList());
+        }
+        if (option == 3) {
+            listObject = contact.stream().sorted((o1, o2) -> o1.zipCode - (o2.zipCode)).collect(Collectors.toList());
+        }
+        for (ContactPersonDetails cp : listObject) {
+            System.out.println(cp);
+        }
+    }
 
-        @Override
+    @Override
     public String toString() {
         return "ContactPersonDetails{" +
                 "firstName='" + firstName + '\'' +

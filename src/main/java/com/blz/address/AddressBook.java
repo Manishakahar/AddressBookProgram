@@ -51,9 +51,11 @@ public class AddressBook {
 
         while (flag) {
             System.out.println("----------------BOOKS----------------------------");
-            System.out.println("1 - Add more Address Book  \n2 - Edit Address Book \n3 - Delete Address Book \n4 - Show AddressBook " + "\n5 - Search Using City or State" +
-                    "\n6- Show City related data" + "\n7 - Enter city or state name " + "\n8 - Enter book Name to find sorted contact person details"
-                    +"\n0 -  for exit \nEnter your Choice.....");
+            System.out.println("1 - Add more Address Book  " + "\n2 - Edit Address Book " +
+                    "\n3 - Delete Address Book"+ "\n4 - Show AddressBook " +
+                    "\n5 - Search Using City or State" + "\n6- Show City related data" +
+                    "\n7 - Enter city or state name " + "\n8 - Enter book Name to find sorted contact person details"+
+                    "\n9 - Sort the Address book entries by city,state,zip" +"\n0 -  for exit \nEnter your Choice.....");
             // User select the Choice
             int choice = sc.nextInt();
             switch (choice) {
@@ -136,16 +138,26 @@ public class AddressBook {
                         System.out.println(cityCount + " - " + cityStateMap.get(cityCount));
                     }
                     break;
+                    // count by City or state person data
                 case 7:
                     System.out.print("Enter City or State name : ");
                     int numberOfContact= ContactPersonDetails.countOfContactPersonData((new Scanner(System.in).next()),addressHashMap);
                     System.out.println("Total number of contact in given City is : "+numberOfContact);
                     break;
+                    //For Sorting data in address book alphabetically
                 case 8:
                     System.out.println("Enter the Book Name ; ");
                     String book=sc.next();
                     List<ContactPersonDetails> contacts=addressHashMap.get(book);
                     ContactPersonDetails.sortContactPersonDetails(contacts);
+                    break;
+                    //For Sorting  entries in address book by city,state or zipcode
+                case 9:
+                    System.out.println("Enter the Book Name : ");
+                    String BOOK = sc.next();
+                    List<ContactPersonDetails> contact = addressHashMap.get(BOOK);
+                    System.out.println("1- City \n2- Sate \n3- Zip");
+                    ContactPersonDetails.sortAddressBookCityStateZip(new Scanner(System.in).nextInt(), contact);
                     break;
                     // For exit
                 case 0:
